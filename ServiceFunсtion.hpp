@@ -1,0 +1,10 @@
+#ifndef _SERVICEFUNCTION_HPP
+#define _SERVICEFUNCTION_HPP
+
+
+
+
+
+
+
+#endif //!_SERVICEFUNCTION_HPP_
