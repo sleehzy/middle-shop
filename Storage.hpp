@@ -10,16 +10,24 @@ extern std::string* nameArr;
 extern unsigned int* countArr;
 extern double* priceArr;
 extern bool isStorageCreated;
+extern unsigned int maxStorageSize;
+extern unsigned int currentStorageSize;
 
 
 void CreateStorage();
 void ShowStorage(int mode = 0);
-
-
+void AddProduct();
+void RemoveProduct();
 
 template<typename ArrType>
-inline void FillArray(ArrType* dynamicArr, ArrType* staticArr);
+static inline void FillArray(ArrType* dynamicArr, ArrType* staticArr)
+{
+	for (size_t i = 0; i < size; i++)
+	{
+		dynamicArr[i] = staticArr[i];
+	}
 
+}
 
 
 #endif //!_STORAGE_HPP_

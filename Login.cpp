@@ -70,6 +70,7 @@
 		std::string choose;
 		while (true)
 		{
+			system("cls");
 			std::cout << "1) Начать продажу\n";
 			std::cout << "2) Показать склад\n";
 			std::cout << "3) Попольнить товары\n";
@@ -91,11 +92,11 @@
 			}
 			if (choose == "3")
 			{
-
+				AddProduct();
 			}
 			if (choose == "4")
 			{
-
+				RemoveProduct();
 			}
 			if (choose == "5")
 			{
