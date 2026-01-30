@@ -5,10 +5,12 @@
 #include <windows.h>
 
 bool IsNumber(const std::string& str);
+
 inline void Getline(std::string& str)
 {
 	std::getline(std::cin, str, '\n');
 }
+
 inline void Err(int mode = 0)
 {
 	std::cout << "Некорректный ввод\n";
@@ -17,6 +19,20 @@ inline void Err(int mode = 0)
 		system("cls");
 	}
 
+
+}
+
+template<typename ArrType>
+inline void ArrPushBack(ArrType*& arr, int arrSize)
+{
+	arrSize++;
+	ArrType* temp = new ArrType[arrSize];
+	for (size_t i = 0; i < arrSize - 1; i++)
+	{
+		temp[i] = arr[i];
+	}
+	std::swap(arr, temp);
+	delete[]temp;
 
 }
 

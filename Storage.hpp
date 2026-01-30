@@ -12,12 +12,19 @@ extern double* priceArr;
 extern bool isStorageCreated;
 extern unsigned int maxStorageSize;
 extern unsigned int currentStorageSize;
-
+extern double maxPrice;
 
 void CreateStorage();
 void ShowStorage(int mode = 0);
 void AddProduct();
 void RemoveProduct();
+void ChangePrice();
+void ChangeStorage();
+void AddNewItem();
+
+
+
+
 
 template<typename ArrType>
 static inline void FillArray(ArrType* dynamicArr, ArrType* staticArr)

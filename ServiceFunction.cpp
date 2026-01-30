@@ -10,7 +10,7 @@ bool IsNumber(const std::string& str)
 	}
 	for (size_t i = 0; i< str.size(); i++)
 	{
-		if (!std::isdigit(str[i]))
+		if (!std::isdigit(static_cast<unsigned char> (str[i])))
 		{
 			std::cout << "¬веденный данные не €вл€ютс€ числом\n";
 			Sleep(1500);
@@ -21,5 +21,5 @@ bool IsNumber(const std::string& str)
 	return true;
 
 }
-
+/*сначала вызываем функцию а потом увиличиваем общий размер*/
 

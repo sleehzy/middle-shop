@@ -100,11 +100,11 @@
 			}
 			if (choose == "5")
 			{
-
+				ChangePrice();
 			}
 			if (choose == "6")
 			{
-
+				ChangeStorage();
 			}
 			if (choose == "7")
 			{
