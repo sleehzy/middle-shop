@@ -35,5 +35,22 @@ inline void ArrPushBack(ArrType*& arr, int arrSize)
 	delete[]temp;
 
 }
+template<typename ArrType>
+inline void ArrDeleteByIndex(ArrType*& arr, int arrSize, int index)
+{
+	arrSize--;
+	ArrType* temp = new ArrType[arrSize];
+	for (size_t i = 0, j = 0; i < arrSize; i++, j++)
+	{
+		if (index == j)
+		{
+			j++;
+		}
+		temp[i] = arr[j];
+	}
+	std::swap(arr, temp);
+	delete[]temp;
+}
+
 
 #endif //!_SERVICEFUNCTION_HPP_

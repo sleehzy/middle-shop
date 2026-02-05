@@ -13,16 +13,22 @@ extern bool isStorageCreated;
 extern unsigned int maxStorageSize;
 extern unsigned int currentStorageSize;
 extern double maxPrice;
+extern double currentExpensiveItem;
+
 
 void CreateStorage();
 void ShowStorage(int mode = 0);
 void AddProduct();
 void RemoveProduct();
 void ChangePrice();
+
 void ChangeStorage();
 void AddNewItem();
+void ChangeProductName();
+void deleteItem();
+void ChangeStorageLimits();
 
-
+void CheckExpensiveItem();
 
 
 
