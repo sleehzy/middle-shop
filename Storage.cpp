@@ -307,10 +307,7 @@
 							 {
 								 std::cout << "Успешное изменение цены\n";
 								 priceArr[id] = price;
-								if (price > currentExpensiveItem)
-								{
-									currentExpensiveItem = price;
-								}
+								 CheckExpensiveItem();
 								 Sleep(1500);
 								 break;
 							 }
@@ -525,10 +522,7 @@
 				countArr[size - 1] = count;
 				priceArr[size - 1] = price;
 				currentStorageSize += count;
-				if (price > currentExpensiveItem)
-				{
-					currentExpensiveItem = price;
-				}
+				CheckExpensiveItem();
 				std::cout << "Товар успешно добавлен\n\n";
 				Sleep(1700);
 				break;
@@ -694,7 +688,7 @@
  void ChangeStorageLimits()
  {
 	 std::string choose, newLimit;
-	 double price = 0;
+	 double newPrice = 0;
 	 unsigned int maxSize = 0;
 	 while (true)
 	 {
@@ -737,18 +731,17 @@
 			 Getline(newLimit);
 			 if (IsNumber(newLimit))
 			 {
-				 maxPrice = std::stod(newLimit);
-				 if (maxPrice < 1)
+				 newPrice = std::stod(newLimit);
+				 if (newPrice < currentExpensiveItem || newPrice >= MAXINT)
 				 {
-					 std::cout << "Некорректное кол-во!\n";
-					 std::cout << "Не меньше " << currentStorageSize << " не более "
-						 << MAXINT << "\n\n";
+					 std::cout << "Некорректная цена!\n";
+					 std::cout << "Не меньше самого дорого товара" << currentExpensiveItem 
+						 << " и не более " << MAXINT << "\n\n";
 					 Sleep(2500);
-
 				 }
 				 else
 				 {
-					 maxStorageSize = maxSize;
+					 maxPrice = newPrice;
 					 std::cout << "Лимиты успешно изменены\n";
 					 Sleep(1500);
 					 break;
@@ -771,13 +764,12 @@
 
  void CheckExpensiveItem()
  {
+	 currentExpensiveItem = 0;
 	 for (size_t i = 0; i < size; i++)
 	 {
 		 if (priceArr[i] > currentExpensiveItem)
 		 {
 			 currentExpensiveItem = priceArr[i]; //Проверить отладчиком
-		 }
-		 
+		 } 
 	 }
-	 std::cout << "Дорогой товар: " << currentExpensiveItem << "\n\n";
  }
