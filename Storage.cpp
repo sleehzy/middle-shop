@@ -67,10 +67,10 @@
 	 else if (mode == 1)
 	 {
 		 system("cls");
-		 std::cout << "ID\t" << std::left << std::setw(50) << "Название товара\t" << "Кол-во\t" << "Цена\t" << "\n";
+		 std::cout << "ID\t" << std::left << std::setw(60) << "Название товара\t" << "Кол-во\t" << "Цена\t" << "\n";
 		 for (size_t i = 0; i < size; i++)
 		 {
-			 std::cout << idArr[i] << "\t" << std::left << std::setw(50) << nameArr[i] << "\t\t" << countArr[i] << "\n";
+			 std::cout << idArr[i] << "\t" << std::left << std::setw(60) << nameArr[i] << "\t\t" << countArr[i] << "\n";
 		 }
 		 std::cout << "\nЗаполненость склада: " << currentStorageSize << "/" << maxStorageSize << "\n\n";
 	 }
@@ -400,6 +400,7 @@
 				 std::cout << "отмена создания нового товара\n";
 				 isExit = false;
 				 Sleep(1500);
+				 break;
 			 }
 			 
 			 if (chooseName.size() < 1 || chooseName.size() > 60)

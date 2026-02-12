@@ -17,16 +17,22 @@ extern unsigned int* userId;
 
 extern std::unordered_set<char> loginSymbols;
 extern std::unordered_set<char> passSymbols;
+extern unsigned int maxLogin;
+extern unsigned int maxPass;
+extern unsigned int minLogin;
+extern unsigned int minPass;
+
 extern bool isSetCreated;
 
 
 
 void ChangeAccounts();
-void CreatNewUser();
-void ShowUsers();
+void CreateNewUser();
+void ShowUsers(int mode = 0);
+bool CheckLogin(const std::string& chooseLogin);
+bool CheckPass(const std::string& choosePass);
 
-
-void CreatSet();
+void CreateSet();
 
 
 

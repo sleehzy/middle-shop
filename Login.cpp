@@ -108,7 +108,7 @@
 			}
 			if (choose == "7")
 			{
-
+				ChangeAccounts();
 			}
 			if (choose == "8")
 			{
