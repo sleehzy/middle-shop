@@ -55,10 +55,10 @@
 	 if(mode == 0)
 	 {
 		 system("cls");
-		 std::cout << "ID\t" << std::left << std::setw(50) << "Название товара\t" << "Кол-во\t" << "Цена\t" << "\n";
+		 std::cout << "ID\t" << std::left << std::setw(70) << "Название товара\t" << "Кол-во\t" << "Цена\t" << "\n";
 		 for (size_t i = 0; i < size; i++)
 		 {
-			 std::cout << idArr[i] << "\t" << std::left << std::setw(40) << nameArr[i] << "\t\t" << countArr[i]
+			 std::cout << idArr[i] << "\t" << std::left << std::setw(60) << nameArr[i] << "\t\t" << countArr[i]
 				 << "\t" << priceArr[i] << "\n";
 		 }
 		 system("pause");
@@ -277,7 +277,7 @@
 		 }
 		 else if (IsNumber(chooseId))
 		 {
-			 id = std::stod(chooseId) - 1;
+			 id = std::stoi(chooseId) - 1;
 			 if (id < 0 || id > size - 1)
 			 {
 				 Err();

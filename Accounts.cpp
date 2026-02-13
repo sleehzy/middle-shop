@@ -6,7 +6,7 @@
  unsigned int currentId = 0;
  std::string* loginArr = new std::string[userSize]{ "admin", "user1", "user2" };
  std::string* passArr = new std::string[userSize]{ "admin", "user1", "user2" };
- std::string* userStatus = new std::string[userSize]{ "superAdministrator"
+ std::string* userStatus = new std::string[userSize]{ "SuperAdministrator"
   ,"Administrator", "User" };
  double* awardArr = new double[userSize] {};
  double* fineArr = new double[userSize] {};
@@ -60,11 +60,11 @@
 		 }
 		 else if (choose == "3")
 		 {
-			 
+			 ChangeLogin();
 		 }
 		 else if (choose == "4")
 		 {
-			 
+			 ChangePass();
 		 }
 		 else if (choose == "5")
 		 {
@@ -91,6 +91,241 @@
 	 }
  }
 
+ void ChangeLogin()
+ {
+	 std::string chooseId, chooseLogin, choose;
+	 int id = 0, isSuperAdmin = 0;
+	 while (true) 
+	 {
+		 if (currentStatus == "Administrator")
+		 {
+			 ShowUsers();
+			 isSuperAdmin = 1;
+		 }
+		 else if (currentStatus == "SuperAdministrator")
+		 {
+			 ShowUsers(1);
+			 isSuperAdmin = 0;
+		 }
+ 
+
+
+		 ShowUsers();
+		 std::cout << "Введите ID пользователя или \"exit\" для выхода \nВвод: ";
+		 Getline(chooseId);
+		 if (chooseId == "exit")
+		 {
+			 std::cout << "Отмена изменения логина\n\n";
+			 Sleep(1500);
+			 break;
+		 }
+		 else if (IsNumber(chooseId))
+		 {
+			 id = std::stoi(chooseId);
+			 if (id < isSuperAdmin || id > userSize - 1)
+			 {
+				 Err();
+			 }
+			 else 
+			 {
+				 std::cout << "Придумайте новый логин для пользователя: ";
+				 Getline(chooseLogin);
+				 if (CheckLogin(chooseLogin))
+				 {
+					 system("cls");
+					 std::cout << loginArr[id] << " ------> " << chooseLogin << "\n\n";
+					 std::cout << "Подтвердить?\n1 - Да\n2 - Нет\nВвод: ";
+					 Getline(choose);
+					 if (choose == "1")
+					 {
+						 loginArr[id] = chooseLogin;
+						 std::cout << "Логин успешно изменён\n";
+						 Sleep(1500);
+						 break;
+					 }
+					 if (choose == "2")
+					 {
+						 std::cout << "Отмена\n";
+						 Sleep(1500);
+					 }
+					 else 
+					 {
+						 Err();
+					 }
+				 }
+
+			 }
+
+		 }
+	 }
+
+ }
+
+ void ChangePass()
+ {
+	 std::string chooseId, chooseLogin, choosePass, choose, currentPass, verifyPass;
+	 int id = 0, isSuperAdmin = 0;
+	 while (true)
+	 {
+		 if (currentStatus == "Administrator")
+		 {
+			 ShowUsers();
+			 isSuperAdmin = 1;
+		 }
+		 else if (currentStatus == "SuperAdministrator")
+		 {
+			 ShowUsers(1);
+			 isSuperAdmin = 0;
+		 }
+
+
+
+		 std::cout << "Введите ID пользователя или \"exit\" для выхода \nВвод: ";
+		 Getline(chooseId);
+		 if (chooseId == "exit")
+		 {
+			 std::cout << "Отмена изменения пароля\n\n";
+			 Sleep(1500);
+			 break;
+		 }
+		 else if (IsNumber(chooseId))
+		 {
+			 id = std::stoi(chooseId);
+			 if (id < isSuperAdmin || id > userSize - 1)
+			 {
+				 Err();
+			 }
+			 else
+			 {
+				 system("cls");
+				 std::cout << "Введите старый Пароль для пользователя: ";
+				 Getline(currentPass);
+				 std::cout << "Придумайте новый Пароль для пользователя: ";
+				 Getline(choosePass);
+				 std::cout << "Подтвердите новый Пароль для пользователя: ";
+				 Getline(verifyPass);
+				 if (currentPass != passArr[id])
+				 {
+					 std::cout << "Ошибка пароля\n";
+					 Sleep(1500);
+					 continue;
+				 }
+                if (choosePass == verifyPass)
+			    {
+
+
+				   if (CheckPass(choosePass))
+				   {
+					  system("cls");
+					  std::cout << passArr[id] << " ------> " << choosePass << "\n\n";
+					  std::cout << "Подтвердить?\n1 - Да\n2 - Нет\nВвод: ";
+					  Getline(choose);
+					  if (choose == "1")
+					  {
+						  passArr[id] = choosePass;
+						  std::cout << "Пароль успешно изменён\n";
+						  Sleep(1500);
+						  break;
+					  }
+					  if (choose == "2")
+					  {
+						  std::cout << "Отмена\n";
+						  Sleep(1500);
+					  }
+					  else
+					  {
+						  Err();
+					  }
+				   }
+			    }
+				else 
+				{
+					std::cout << "Пароли не совпадают";
+					Sleep(1500);
+				}
+				 
+				 
+				
+			 }
+		 
+
+		 }
+	 }
+
+ }
+
+ void ChangeStatus()
+ {
+	 std::string chooseId, chooseStatus, choose;
+	 int id = 0, isSuperAdmin = 0;
+	 while (true)
+	 {
+
+
+		 ShowUsers();
+
+		 std::cout << "Введите ID пользователя или \"exit\" для выхода \nВвод: ";
+		 Getline(chooseId);
+		 if (chooseId == "exit")
+		 {
+			 std::cout << "Отмена изменения логина\n\n";
+			 Sleep(1500);
+			 break;
+		 }
+		 else if (IsNumber(chooseId))
+		 {
+			 id = std::stoi(chooseId);
+			 if (id < 1 || id > userSize - 1)
+			 {
+				 Err();
+			 }
+			 else
+			 {
+				 system("cls");
+				 std::cout << "Введите новую роль для пользователя или \"exit\" для выхода \nВвод: ";
+				 std::cout << "1 - Сотрудник\n";
+				 std::cout << "2 - Администратор\n";
+				 std::cout << "Ввод: ";
+				 Getline(choose);
+				 if (choose == "exit")
+				 {
+					 std::cout << "отмена изменения роли\n";
+					 
+					 Sleep(1500);
+					 break;
+				 }
+				 if (choose == "1")
+				 {
+					 chooseStatus = "User";
+				 }
+				 else if (choose == "2")
+				 {
+					 std::cout << "Введите пароль супер администратора для подтверждения: ";
+					 Getline(choose);
+					 if (choose == passArr[0])
+					 {
+						 chooseStatus = "Administrator";
+					 }
+					 else
+					 {
+						 Err();
+						 continue;
+					 }
+				 }
+
+				 else
+				 {
+					 Err();
+					 continue;
+				 }
+				 std::cout << userStatus[id] << " -------> " << chooseStatus << "\n";
+				 std::cout << "Подтвердить?\n";
+				 //TO DO
+
+			 }
+		 }
+	 }
+ }
 
  void CreateNewUser()
  {
@@ -132,9 +367,9 @@
 				 Sleep(1500);
 				 break;
 			 }
-			 if (true)
+			 if (CheckPass(choosePass))
 			 {
-
+				 break;
 
 			 }
 		 }
@@ -142,35 +377,43 @@
 		 while (isExit)
 		 {
 			 system("cls");
-			 isSame = false;
-			 std::cout << "Введите цену нового товара или \"exit\" для выхода \nВвод: ";
-			 Getline(choosePrice);
-			 if (choosePrice == "exit")
+			 std::cout << "Введите роль для нового пользователя или \"exit\" для выхода \nВвод: ";
+			 std::cout << "1 - Сотрудник\n";
+			 std::cout << "2 - Администратор\n";
+			 std::cout << "Ввод: ";
+			 Getline(choose);
+			 if (choose == "exit")
 			 {
-				 std::cout << "отмена создания новой цены\n";
+				 std::cout << "отмена создания нового пользователя\n";
 				 isExit = false;
 				 Sleep(1500);
 				 break;
 			 }
-
-			 if (IsNumber(choosePrice))
+			 if (choose == "1")
 			 {
-				 price = std::stod(choosePrice);
-				 if (price < 0 || price > maxPrice)
+				 chooseStatus = "User";
+				 break;
+			 }
+			 else if (choose == "2")
+			 {
+				 std::cout << "Введите пароль супер администратора для подтверждения";
+				 Getline(choose);
+				 if (choose == passArr[0])
 				 {
-					 std::cout << "Ошибка! максимальная цена: " << maxPrice << "рублей\n\n";
-					 Sleep(1500);
+					 chooseStatus = "Administrator";
+					 break;
 				 }
 				 else
 				 {
-					 break;
+					 Err();
 				 }
-
 			 }
+			
 			 else
 			 {
 				 Err();
 			 }
+
 		 }
 
 		 if (!isExit)
@@ -180,31 +423,34 @@
 
 		 else
 		 {
-			 std::cout << "Новый товар: " << chooseName << "\n";
-			 std::cout << "Кол-во: " << count << "\n";
-			 std::cout << "Цена: " << price << "\n";
+			 std::cout << "Логин: " << chooseLogin << "\n";
+			 std::cout << "Пароль: " << choosePass << "\n";
+			 std::cout << "Роль: " << chooseStatus << "\n";
 			 std::cout << "Подтвердить? \n1 - Да\n2 - Отмена\nВвод: ";
 			 Getline(choose);
 			 if (choose == "1")
 			 {
-				 ArrPushBack(idArr, size);
-				 ArrPushBack(nameArr, size);
-				 ArrPushBack(priceArr, size);
-				 ArrPushBack(countArr, size);
-				 size++;
-				 idArr[size - 1] = size;
-				 nameArr[size - 1] = chooseName;
-				 countArr[size - 1] = count;
-				 priceArr[size - 1] = price;
-				 currentStorageSize += count;
-				 CheckExpensiveItem();
-				 std::cout << "Товар успешно добавлен\n\n";
+				 ArrPushBack(loginArr, userSize);
+				 ArrPushBack(passArr, userSize);
+				 ArrPushBack(userStatus, userSize);
+				 ArrPushBack(awardArr, userSize);
+				 ArrPushBack(fineArr, userSize);
+				 ArrPushBack(userId, userSize);
+				 userSize++;
+				 userId[userSize - 1] = userSize - 1;
+				 awardArr[userSize - 1] = 0;
+				 fineArr[userSize - 1] = 0;
+				 loginArr[userSize - 1] = chooseLogin;
+				 passArr[userSize - 1] = choosePass;
+				 userStatus[userSize - 1] = chooseStatus;
+
+				 std::cout << "Пользователь успешно добавлен\n\n";
 				 Sleep(1700);
 				 break;
 			 }
 			 else if (choose == "2")
 			 {
-				 std::cout << "Отмена добовление товара!\n";
+				 std::cout << "Отмена создания нового пользователя!\n";
 				 Sleep(1500);
 			 }
 			 else
@@ -222,7 +468,7 @@
  {
 	 system("cls");
 	 std::cout << "ID" << "   Логин" << std::left << std::setw(maxLogin + 10)
-		 << "\t\tПароль \n";
+		 << "\t\tПароль " << "\n";
 	 if (mode == 0)
 	 {
 		 
@@ -289,7 +535,7 @@
 
  bool CheckPass(const std::string& choosePass)
  {
-	 int symbolCount = 0, maxSymbols = 3, numberCount = 0, maxNumber = 3, letterCount = 0, maxletter = 3;
+	 int symbolCount = 0, maxSymbols = 3, numberCount = 0, maxNumber = 3, letterCount = 0, maxLetter = 3;
 	 if (choosePass.size() < minPass || choosePass.size() > maxPass)
 	 {
 
@@ -319,6 +565,17 @@
 			 {
 				 symbolCount++;
 			 }
+		 }
+		 if (numberCount >= maxNumber && letterCount >= maxLetter && symbolCount >= maxSymbols)
+		 {
+			 return true;
+		 }
+		 else 
+		 {
+			 std::cout << "Слишком простой пароль\n\n";
+			 std::cout << "Минимум " << maxLetter << " букв, " << maxNumber << " цифр, " << maxSymbols << " символа в пароле\n";
+			 Sleep(2000);
+			 return false;
 		 }
 
 	 }

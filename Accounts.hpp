@@ -27,6 +27,9 @@ extern bool isSetCreated;
 
 
 void ChangeAccounts();
+void ChangeLogin();
+void ChangePass();
+void ChangeStatus();
 void CreateNewUser();
 void ShowUsers(int mode = 0);
 bool CheckLogin(const std::string& chooseLogin);

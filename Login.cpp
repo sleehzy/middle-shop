@@ -40,18 +40,18 @@
 		std::cout << "\n\n\n\t\t\t Добро пожаловать!\n\n\t\t\t Дефицит оперативной памяти\n\n\n";
 		if (Login())
 		{
-			if (currentStatus == userStatus[0])
+			if (currentStatus == "SuperAdministrator")
 			{
 				CreateStorage();
 				SuperAdminMenu();
 			}
-			else if (currentStatus == userStatus[1])
+			else if (currentStatus == "Administrator")
 			{
-
+				std::cout << "2\n\n";
 			}
-			else if (currentStatus == userStatus[2])
+			else if (currentStatus == "User")
 			{
-
+				std::cout << "3\n\n";
 			}
 			else
 			{
