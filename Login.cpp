@@ -44,6 +44,8 @@
 			{
 				CreateStorage();
 				SuperAdminMenu();
+				//новый склад с нуля
+
 			}
 			else if (currentStatus == "Administrator")
 			{
