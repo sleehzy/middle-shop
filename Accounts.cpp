@@ -490,15 +490,40 @@
 
 	 while (true)
 	 {
+		 system("cls");
+
 		 if (currentStatus == "SuperAdministrator")
 		 {
-			 isSuperAdmin = 0;
-			 ShowUsers(3);
+			 std::cout << "Введите пароль супер администратора для подтверждения: ";
+			 Getline(choose);
+			 if (choose == passArr[0])
+			 {
+				 isSuperAdmin = 0;
+				 ShowUsers(3);
+			 }
+			 else
+			 {
+				 Err();
+				 break;
+			 }
+
+			
 		 }
 		 else if (currentStatus == "Administrator")
 		 {
-			 isSuperAdmin = 1;
-			 ShowUsers(4);
+			 std::cout << "Введите свой пароль для подтверждения: ";
+			 Getline(choose);
+			 if (choose == passArr[currentId])
+			 {
+				 isSuperAdmin = 1;
+				 ShowUsers(4);
+			 }
+			 else
+			 {
+				 Err();
+				 break;
+			 }
+
 		 }
 
 
@@ -521,72 +546,111 @@
 			 }
 			 else
 			 {
+				 if (currentStatus == "Administrator" && userStatus[id] != "User")
+				 {
+					 std::cout << "Некорректный пользователь";
+					 Sleep(1500);
+					 continue;
+				 }
+
+
 				 system("cls");
-				 std::cout << "Введите новую роль для пользователя или \"exit\" для выхода \nВвод: ";
-				 std::cout << "1 - Сотрудник\n";
-				 std::cout << "2 - Администратор\n";
+				 std::cout << "Выбрите пункт меню или \"exit\" для выхода \nВвод: ";
+				 std::cout << "1 - Изменить сумма продаж\n";
+				 std::cout << "2 - Изменить сумму штрафов\n";
 				 std::cout << "Ввод: ";
 				 Getline(choose);
 				 if (choose == "exit")
 				 {
-					 std::cout << "отмена изменения роли\n";
-
+					 std::cout << "Отмена редактирования штрафов и суммы продаж\n";
 					 Sleep(1500);
 					 break;
 				 }
-				 if (choose == "1")
+				 if (choose == "1")//============
 				 {
-					 chooseStatus = "User";
+					 while (true)
+					 {
+						 system("cls");
+						 std::cout << "Введите корректную сумму продаж или \"exit\" для выхода \nВвод: ";
+						 Getline(chooseSum);
+						 if (chooseSum == "exit")
+						 {
+							 std::cout << "отмена редактирования суммы продаж\n";
+							 Sleep(1500);
+							 return;
+						 }
+
+						 if (IsNumber(chooseSum))
+						 {
+							 sum = std::stod(chooseSum);
+							 if (sum < 0 || sum > MAXINT)
+							 {
+								 std::cout << "Ошибка! максимальная сумма " << MAXINT << "рублей\n\n";
+								 Sleep(1500);
+							 }
+							 else
+							 {
+								 awardArr[id] = sum;
+								 std::cout << "Успешно\n";
+								 Sleep(1500);
+								 return;
+							 }
+
+						 }
+						 else
+						 {
+							 Err();
+						 }
+					 }
 				 }
 				 else if (choose == "2")
 				 {
-					 std::cout << "Введите пароль супер администратора для подтверждения: ";
-					 Getline(choose);
-					 if (choose == passArr[0])
+					 while (true)
 					 {
-						 chooseStatus = "Administrator";
-					 }
-					 else
-					 {
-						 Err();
-						 continue;
+						 system("cls");
+						 std::cout << "Введите корректную сумму штрафов или \"exit\" для выхода \nВвод: ";
+						 Getline(chooseSum);
+						 if (chooseSum == "exit")
+						 {
+							 std::cout << "отмена редактирования штрафов продаж\n";
+							 Sleep(1500);
+							 return;
+						 }
+
+						 if (IsNumber(chooseSum))
+						 {
+							 sum = std::stod(chooseSum);
+							 if (sum < 0 || sum > 15000)
+							 {
+								 std::cout << "Ошибка! максимальная сумма " << 15000 << "рублей\n\n";
+								 Sleep(1500);
+							 }
+							 else
+							 {
+								 fineArr[id] = sum;
+								 std::cout << "Успешно\n";
+								 Sleep(1500);
+								 return;
+							 }
+
+						 }
+						 else
+						 {
+							 Err();
+						 }
 					 }
 				 }
-
 				 else
 				 {
 					 Err();
 					 continue;
 				 }
-				 std::cout << userStatus[id] << " -------> " << chooseStatus << "\n";
-				 std::cout << "Подтвердить?\n";
-				 std::cout << "1 - Да\n2 - Нет\n\nВвод: ";
-				 Getline(choose);
-				 if (choose == "1")
-				 {
-					 userStatus[id] = chooseStatus;
-					 std::cout << "Успешно!\n";
-					 Sleep(1500);
-					 break;
-				 }
-				 else if (choose == "2")
-				 {
-					 std::cout << "Отмена\n";
-					 Sleep(1500);
-				 }
-				 else
-				 {
-					 Err();
-				 }
-
-
 			 }
 		 }
 	 }
-
  }
 
- void ShowUsers(int mode)
+ void ShowUsers(int mode)// TO DO добавить премии и штрафы в базовый код
  {
 	 system("cls");
 	 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin - 2)
@@ -633,7 +697,7 @@
 		 system("cls");
 		 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin + 3)
 			 << "\tКол-во продаж" << "\tШтрафы" << "\n";
-		 for (size_t i = 0; i < userSize; i++)
+		 for (size_t i = 1; i < userSize; i++)
 		 {
 			 std::cout << userId[i] << "\t" << std::left << std::setw(maxLogin) << loginArr[i]
 				 << "\t" << awardArr[i] << "\t\t\t" << fineArr[i] << "\n";
