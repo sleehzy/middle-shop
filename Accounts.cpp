@@ -37,8 +37,8 @@
 		 std::cout << "3 - Изменить логин\n";
 		 std::cout << "4 - изменить пароль\n";
 		 std::cout << "5 - Изменить уровни доступа\n";
-		 std::cout << "6 - Редактировать профиль сотрудника\n";
-		 std::cout << "7 - Удали аккаунт\n";
+		 std::cout << "6 - Редактировать премии и штрафы сотрудника\n";
+		 std::cout << "7 - Удалить аккаунт\n";
 		 std::cout << "0 - Выход\n";
 		 std::cout << "Ввод: ";
 		 Getline(choose);
@@ -68,11 +68,11 @@
 		 }
 		 else if (choose == "5")
 		 {
-
+			 ChangeStatus();
 		 }
 		 else if (choose == "6")
 		 {
-
+			 ChangeAwards();
 		 }
 		 else if (choose == "7")
 		 {
@@ -262,7 +262,7 @@
 	 {
 
 
-		 ShowUsers();
+		 ShowUsers(2);
 
 		 std::cout << "Введите ID пользователя или \"exit\" для выхода \nВвод: ";
 		 Getline(chooseId);
@@ -320,7 +320,25 @@
 				 }
 				 std::cout << userStatus[id] << " -------> " << chooseStatus << "\n";
 				 std::cout << "Подтвердить?\n";
-				 //TO DO
+				 std::cout << "1 - Да\n2 - Нет\n\nВвод: ";
+				 Getline(choose);
+				 if (choose == "1")
+				 {
+					 userStatus[id] = chooseStatus;
+					 std::cout << "Успешно!\n";
+					 Sleep(1500);
+					 break;
+				 }
+				 else if (choose == "2")
+				 {
+					 std::cout << "Отмена\n";
+					 Sleep(1500);
+				 }
+				 else 
+				 {
+					 Err();
+				 }
+
 
 			 }
 		 }
@@ -464,11 +482,115 @@
 
  }
 
+ void ChangeAwards()
+ {
+	 std::string chooseId, chooseSum, choose;
+	 int id = 0, isSuperAdmin = 0;
+	 double sum = 0.0;
+
+	 while (true)
+	 {
+		 if (currentStatus == "SuperAdministrator")
+		 {
+			 isSuperAdmin = 0;
+			 ShowUsers(3);
+		 }
+		 else if (currentStatus == "Administrator")
+		 {
+			 isSuperAdmin = 1;
+			 ShowUsers(4);
+		 }
+
+
+		 ShowUsers(3);
+
+		 std::cout << "Введите ID пользователя или \"exit\" для выхода \nВвод: ";
+		 Getline(chooseId);
+		 if (chooseId == "exit")
+		 {
+			 std::cout << "Отмена редактирования штрафов и премий\n\n";
+			 Sleep(1500);
+			 break;
+		 }
+		 else if (IsNumber(chooseId))
+		 {
+			 id = std::stoi(chooseId);
+			 if (id < 1 || id > userSize - 1)
+			 {
+				 Err();
+			 }
+			 else
+			 {
+				 system("cls");
+				 std::cout << "Введите новую роль для пользователя или \"exit\" для выхода \nВвод: ";
+				 std::cout << "1 - Сотрудник\n";
+				 std::cout << "2 - Администратор\n";
+				 std::cout << "Ввод: ";
+				 Getline(choose);
+				 if (choose == "exit")
+				 {
+					 std::cout << "отмена изменения роли\n";
+
+					 Sleep(1500);
+					 break;
+				 }
+				 if (choose == "1")
+				 {
+					 chooseStatus = "User";
+				 }
+				 else if (choose == "2")
+				 {
+					 std::cout << "Введите пароль супер администратора для подтверждения: ";
+					 Getline(choose);
+					 if (choose == passArr[0])
+					 {
+						 chooseStatus = "Administrator";
+					 }
+					 else
+					 {
+						 Err();
+						 continue;
+					 }
+				 }
+
+				 else
+				 {
+					 Err();
+					 continue;
+				 }
+				 std::cout << userStatus[id] << " -------> " << chooseStatus << "\n";
+				 std::cout << "Подтвердить?\n";
+				 std::cout << "1 - Да\n2 - Нет\n\nВвод: ";
+				 Getline(choose);
+				 if (choose == "1")
+				 {
+					 userStatus[id] = chooseStatus;
+					 std::cout << "Успешно!\n";
+					 Sleep(1500);
+					 break;
+				 }
+				 else if (choose == "2")
+				 {
+					 std::cout << "Отмена\n";
+					 Sleep(1500);
+				 }
+				 else
+				 {
+					 Err();
+				 }
+
+
+			 }
+		 }
+	 }
+
+ }
+
  void ShowUsers(int mode)
  {
 	 system("cls");
-	 std::cout << "ID" << "   Логин" << std::left << std::setw(maxLogin + 10)
-		 << "\t\tПароль " << "\n";
+	 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin - 2)
+		 << "\tПароль " << "\tРоль" << "\n";
 	 if (mode == 0)
 	 {
 		 
@@ -476,7 +598,7 @@
 		 for (size_t i = 1; i < userSize; i++)
 		 {
 			 std::cout << userId[i]<< "\t" << std::left << std::setw(maxLogin) << loginArr[i]
-				 << "\t" << passArr[i] << "\n";
+				 << "\t" << passArr[i] << "\t\t" << userStatus[i] << "\n";
 
 		 }
 
@@ -488,11 +610,56 @@
 		 for (size_t i = 0; i < userSize; i++)
 		 {
 			 std::cout << userId[i] << "\t" << std::left << std::setw(maxLogin) << loginArr[i]
-				 << "\t" << passArr[i] << "\n";
+				 << "\t" << passArr[i] << "\t\t" << userStatus[i] << "\n";
 
 		 }
 
 	 }
+	 else if (mode == 2)
+	 {
+		 system("cls");
+		 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin + 10)
+			 << "\tРоль" << "\n";
+		 for (size_t i = 1; i < userSize; i++)
+		 {
+			 std::cout << userId[i] << "\t" << std::left << std::setw(maxLogin) << loginArr[i]
+				 << "\t" << userStatus[i] << "\n";
+
+		 }
+
+	 }
+	 else if (mode == 3)
+	 {
+		 system("cls");
+		 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin + 3)
+			 << "\tКол-во продаж" << "\tШтрафы" << "\n";
+		 for (size_t i = 0; i < userSize; i++)
+		 {
+			 std::cout << userId[i] << "\t" << std::left << std::setw(maxLogin) << loginArr[i]
+				 << "\t" << awardArr[i] << "\t\t\t" << fineArr[i] << "\n";
+
+		 }
+
+
+	 }
+	 else if (mode == 4)
+	 {
+		 system("cls");
+		 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin + 3)
+			 << "\tКол-во продаж" << "\tШтрафы" << "\n";
+		 for (size_t i = 0; i < userSize; i++)
+		 {
+			 if (userStatus[i] == "User")
+			 {
+				 std::cout << userId[i] << "\t" << std::left << std::setw(maxLogin) << loginArr[i]
+					 << "\t" << awardArr[i] << "\t\t\t" << fineArr[i] << "\n";
+			 }
+			
+		 }
+
+
+	 }
+
 
  }
 
