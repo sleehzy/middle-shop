@@ -48,11 +48,11 @@
 		 }
 		 else if (choose == "2")
 		 {
-			 if (currentStatus == userStatus[1])
+			 if (currentStatus == "Administrator")
 			 {
 				 ShowUsers();
 			 }
-			 else if (currentStatus == userStatus[0])
+			 else if (currentStatus == "SuperAdministrator")
 			 {
 				 ShowUsers(1);
 			 }
@@ -68,14 +68,40 @@
 		 }
 		 else if (choose == "5")
 		 {
-			 ChangeStatus();
+			 if (userSize > 1)
+			 {
+				 ChangeStatus();
+			 }
+			 else 
+			 {
+				 std::cout << "Нет доступных пользователей";
+				 Sleep(1500);
+			 }
 		 }
 		 else if (choose == "6")
 		 {
-			 ChangeAwards();
+			 if (userSize > 1)
+			 {
+				 ChangeAwards();
+			 }
+			 else
+			 {
+				 std::cout << "Нет доступных пользователей";
+				 Sleep(1500);
+			 }
+
 		 }
 		 else if (choose == "7")
 		 {
+			 if (userSize > 1)
+			 {
+				 DeleteUser();
+			 }
+			 else
+			 {
+				 std::cout << "Нет доступных пользователей";
+				 Sleep(1500);
+			 }
 
 		 }
 		 else if (choose == "0")
@@ -650,11 +676,83 @@
 	 }
  }
 
- void ShowUsers(int mode)// TO DO добавить премии и штрафы в базовый код
+ void DeleteUser()
+ {
+	 std::string chooseId, chooseStatus, choose;
+	 int id = 0;
+	 while (true)
+	 {
+
+
+		 ShowUsers(2);
+
+		 std::cout << "Введите ID пользователя для удаления или \"exit\" для выхода \nВвод: ";
+		 Getline(chooseId);
+		 if (chooseId == "exit")
+		 {
+			 std::cout << "Отмена удаления\n\n";
+			 Sleep(1500);
+			 break;
+		 }
+		 else if (IsNumber(chooseId))
+		 {
+			 id = std::stoi(chooseId);
+			 if (id < 1 || id > userSize - 1)
+			 {
+				 Err();
+			 }
+			 else if (id == currentId)
+			 {
+				 std::cout << "нельзя удалить себя\n";
+				 Sleep(1500);
+			 }
+			 else
+			 {
+				 std::cout << "Удалить пользователя" << loginArr[id] << "?";
+				 std::cout << "Для подтверждения введите пароль супер администратора или \"exit\" для выхода \nВвод: ";
+				 Getline(choose);
+				 if (choose == "exit")
+				 {
+					 std::cout << "Отмена удаления\n\n";
+					 Sleep(1500);
+				 }
+				 else if (choose == passArr[0])
+				 {
+					 if (id < currentId)
+					 {
+						 --currentId;
+					 }
+					 ArrDeleteByIndex(loginArr, userSize, id);
+					 ArrDeleteByIndex(passArr, userSize, id);
+					 ArrDeleteByIndex(userStatus, userSize, id);
+					 ArrDeleteByIndex(awardArr, userSize, id);
+					 ArrDeleteByIndex(fineArr, userSize, id);
+					 --userSize;
+					 for (size_t i = 0; i < userSize; i++)
+					 {
+						 userId[i] = i;
+					 }
+					 std::cout << "Идёт процесс удаления....\n";
+					 Sleep(1900);
+					 std::cout << "Пользователь удалён\n";
+					 Sleep(1500);
+					 break;
+				 }
+				 else 
+				 {
+					 Err();
+				 }
+
+			 }
+		 }
+	 }
+ }
+
+ void ShowUsers(int mode)
  {
 	 system("cls");
 	 std::cout << "ID" << "\tЛогин\t" << std::left << std::setw(maxLogin - 2)
-		 << "\tПароль " << "\tРоль" << "\n";
+		 << "\tПароль " << "\tРоль"<< "\t\t\t\tСумма продаж" << "\tШтрафы" << "\n";
 	 if (mode == 0)
 	 {
 		 
@@ -662,7 +760,7 @@
 		 for (size_t i = 1; i < userSize; i++)
 		 {
 			 std::cout << userId[i]<< "\t" << std::left << std::setw(maxLogin) << loginArr[i]
-				 << "\t" << passArr[i] << "\t\t" << userStatus[i] << "\n";
+				 << "\t" << std::setw(maxPass / 1.5) << passArr[i] << "\t\t" << userStatus[i] << "\n";
 
 		 }
 
@@ -674,7 +772,8 @@
 		 for (size_t i = 0; i < userSize; i++)
 		 {
 			 std::cout << userId[i] << "\t" << std::left << std::setw(maxLogin) << loginArr[i]
-				 << "\t" << passArr[i] << "\t\t" << userStatus[i] << "\n";
+				 << "\t" << std::setw(maxPass / 2.5) << passArr[i] << "\t" << std::setw(maxLogin + 2) << userStatus[i]
+				 << "\t\t" << awardArr[i] << "\t\t" << fineArr[i] << "\n";
 
 		 }
 

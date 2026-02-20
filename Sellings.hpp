@@ -1,10 +1,20 @@
-#ifndef _STORAGE_HPP
-#define _STORAGE_HPP
+#ifndef _SELLINGS_HPP
+#define _SELLINGS_HPP
+#include "Storage.hpp"
+
+extern size_t checkSize;
+extern unsigned int* idArrCheck;
+extern std::string* nameArrCheck;
+extern unsigned int* countArrCheck;
+extern double* priceArrCheck;
+extern double* totalPriceArrCheck;
+extern double cashIncome;
+extern double nonCashIncome;
+extern double cashBox;
+
+void Sellings();
 
 
 
 
-
-
-
-#endif //!_STORAGE_HPP_
+#endif //!_SELLINGS_HPP_
